@@ -1,0 +1,22 @@
+{
+  "name": "products",
+  "version": "1.0.0",
+  "description": "Prodcuts service - GraphQL Apollo Federation example",
+  "main": "src/index.js",
+  "scripts": {
+    "start": "node src/index.js",
+    "start:dev": "nodemon src/index.js"
+  },
+  "keywords": [],
+  "author": "franzmoro",
+  "license": "ISC",
+  "dependencies": {
+    "@apollo/federation": "latest",
+    "apollo-server": "latest",
+    "graphql": "latest"
+  },
+  "devDependencies": {
+    "nodemon": "latest"
+  }
+
+}

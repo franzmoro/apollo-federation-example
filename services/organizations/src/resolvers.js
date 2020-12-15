@@ -19,7 +19,7 @@ const resolvers = {
   User: {
     __resolveReference(object) {
       return users.find(user => user.id === object.id);
-    }
+    },
   },
   Organization: {
     __resolveReference(object) {

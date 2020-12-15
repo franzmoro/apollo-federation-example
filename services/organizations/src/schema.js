@@ -6,7 +6,7 @@ const typeDefs = gql`
     NORMAL_USER
   }
 
-  type User {
+  type User @key(fields: "id") {
     id: ID!
     firstName: String!
     lastName: String!
@@ -15,7 +15,7 @@ const typeDefs = gql`
     organization: Organization
   }
 
-  type Organization {
+  type Organization @key(fields: "id") {
     id: ID!
     name: String!
     users: [User]

@@ -2,7 +2,8 @@ const { ApolloServer } = require('apollo-server');
 const { ApolloGateway, RemoteGraphQLDataSource } = require('@apollo/gateway');
 
 class AuthenticatedDataSource extends RemoteGraphQLDataSource {
-  willSendRequest({ request, context: { userId } }) {
+  willSendRequest({ request, context }) {
+    const { userId } = context
     // Pass the user's id from the context to underlying services
     // as a header called `user-id`
     request.http.headers.set('userId', userId);
@@ -17,7 +18,7 @@ const gateway = new ApolloGateway({
   // real usage-based metrics.
   serviceList: [
     { name: 'organizations', url: 'http://localhost:4001/graphQL' },
-    // { name: 'products', url: 'http://localhost:4002/graphQL' },
+    { name: 'products', url: 'http://localhost:4002/graphQL' },
     // List other services here
   ],
 
@@ -25,15 +26,17 @@ const gateway = new ApolloGateway({
     return new AuthenticatedDataSource({ url });
   },
 
-  // Experimental: Enabling this enables the query plan view in Playground.
-  __exposeQueryPlanExperimental: false,
+  __exposeQueryPlanExperimental: true,
 });
 
 
 (async () => {
-  const server = new ApolloServer({
-    gateway,
+  const { schema, executor } = await gateway.load();
 
+  const server = new ApolloServer({
+    // gateway,
+    schema,
+    executor,
     // Apollo Graph Manager (previously known as Apollo Engine)
     // When enabled and an `ENGINE_API_KEY` is set in the environment,
     // provides metrics, schema management and trace reporting.
