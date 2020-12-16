@@ -1,11 +1,11 @@
-const { products } = require('./mocks');
+const { products } = require('../../../mocks/products');
 
 const resolvers = {
   Query: {
-    product(_root, { id }) {
+    product(parent, { id }) {
       return products.find(p => p.id === id);
     },
-    products(_root, _context) {
+    products(parent, args, context) {
       return products;
     },
   },

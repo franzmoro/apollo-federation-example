@@ -2,11 +2,10 @@ const { ApolloServer } = require('apollo-server');
 const { ApolloGateway, RemoteGraphQLDataSource } = require('@apollo/gateway');
 
 class AuthenticatedDataSource extends RemoteGraphQLDataSource {
-  willSendRequest({ request, context }) {
-    const { userId } = context
+  willSendRequest({ request, context: { userId } }) {
     // Pass the user's id from the context to underlying services
     // as a header called `user-id`
-    request.http.headers.set('userId', userId);
+    request.http.headers.set('user-id', userId);
   }
 }
 
@@ -17,8 +16,9 @@ const gateway = new ApolloGateway({
   // prevents composition failures at runtime using schema validation using
   // real usage-based metrics.
   serviceList: [
-    { name: 'organizations', url: 'http://localhost:4001/graphQL' },
-    { name: 'products', url: 'http://localhost:4002/graphQL' },
+    { name: 'users', url: 'http://localhost:4001/graphQL' },
+    { name: 'organizations', url: 'http://localhost:4002/graphQL' },
+    { name: 'products', url: 'http://localhost:4003/graphQL' },
     // List other services here
   ],
 
@@ -50,7 +50,7 @@ const gateway = new ApolloGateway({
       const token = req.headers.authorization || '';
       // Try to retrieve a user with the token
       // const userId = getUserId(token);
-      const userId = 'abc123';
+      const userId = '1';
       // Add the user ID to the context
       return { userId };
     },

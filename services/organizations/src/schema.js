@@ -6,27 +6,20 @@ const typeDefs = gql`
     NORMAL_USER
   }
 
-  type User @key(fields: "id") {
-    id: ID!
-    firstName: String!
-    lastName: String!
-    email: String!
-    role: UserRole
-    organization: Organization
-  }
-
   type Organization @key(fields: "id") {
     id: ID!
     name: String!
-    users: [User]
     description: String
   }
 
+  extend type User @key(fields: "id") {
+    id: ID! @external
+    organization: Organization!
+  }
+
   type Query {
-    me: User!
-    user(id: ID!): User!
+    organizations: [Organization!]!
     myOrganization: Organization!
-    allUsers: [User]!
   }
 `;
 

@@ -1,30 +1,18 @@
-const { organizations, users } = require('./mocks');
+const { organizations } = require('../../../mocks/organizations');
 
 const resolvers = {
   Query: {
-    user(root, { id }) {
-      return users.find(user => user.id === id);
+    organizations() {
+      return organizations;
     },
-    allUsers() {
-      return users;
+    myOrganization(_parent, _args, { userId }) {
+      return organizations.find(({ users }) => users.includes(userId));
     },
-    myOrganization() {
-      const user = users[0];
-      return user.organization;
-    },
-    me() {
-      return users[0];
-    }
   },
   User: {
-    __resolveReference(object) {
-      return users.find(user => user.id === object.id);
-    },
-  },
-  Organization: {
-    __resolveReference(object) {
-      return users.find(user => user.id === object.id);
-    },
+    organization({ id: userId }) {
+      return organizations.find(({ users }) => users.includes(userId));
+    }
   }
 };
 
