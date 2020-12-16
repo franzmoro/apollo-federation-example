@@ -1,0 +1,33 @@
+{
+  "name": "graphql-federation-prisma2-example",
+  "version": "1.0.0",
+  "description": "An example setup of Apollo Federation / Gateway",
+  "main": "index.js",
+  "author": "franzmoro",
+  "license": "MIT",
+  "dependencies": {
+    "@apollo/gateway": "^0.21.4",
+    "apollo-server": "^2.19.0",
+    "graphql": "^15.4.0"
+  },
+  "devDependencies": {
+    "lerna": "latest",
+    "nodemon": "latest"
+  },
+  "scripts": {
+    "start-gateway": "nodemon gateway.js",
+    "start-service-organizations": "nodemon services/organizations/index.js",
+    "start-service-products": "nodemon services/products/index.js",
+    "start-service-users": "nodemon services/users/index.js",
+    "postinstall": "lerna bootstrap"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/franzmoro/apollo-federation-example.git"
+  },
+  "keywords": [],
+  "bugs": {
+    "url": "https://github.com/franzmoro/apollo-federation-example/issues"
+  },
+  "homepage": "https://github.com/franzmoro/apollo-federation-example#readme"
+}
